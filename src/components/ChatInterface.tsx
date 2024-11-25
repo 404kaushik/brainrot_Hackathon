@@ -91,7 +91,7 @@ export default function ChatInterface() {
   return (
     <div className="max-w-2xl mx-auto h-screen flex flex-col px-4">
       <header className="py-6 text-center border-b border-gray-100">
-        <h1 className="text-2xl font-light text-gray-900">Excuse Generator</h1>
+        <h1 className="text-2xl font-light text-gray-900">myDawgAteit</h1>
       </header>
       
       {/* Predefined Prompts Section */}
@@ -129,7 +129,7 @@ export default function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your situation..."
-            className="flex-1 px-4 py-3 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all"
+            className="flex-1 px-4 py-3 rounded-xl bg-gray-50 text-gray-950 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all"
             disabled={isLoading}
           />
           <button
