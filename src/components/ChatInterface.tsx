@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useGroq } from '@/context/GroqContext';
 import MessageBubble from './MessageBubble';
 import ImageUpload from './ImageUpload';
-import { Message } from '@/types';
+import { Message, ExcuseTone } from '@/types';
 
 // Add an array of predefined prompts
 const PREDEFINED_PROMPTS = [
@@ -14,22 +14,30 @@ const PREDEFINED_PROMPTS = [
   "I want to avoid a family gathering"
 ];
 
+// Predefined tones
+const TONE_OPTIONS: ExcuseTone[] = ['simple', 'professional', 'funny', 'apologetic', 'creative'];
+
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [pendingImageText, setPendingImageText] = useState<string | null>(null);
+  const [selectedTone, setSelectedTone] = useState<ExcuseTone>('simple');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { generateExcuse } = useGroq();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
   const handleSubmit = async (e: React.FormEvent | React.MouseEvent, promptText?: string) => {
+    
     // If it's a form submit, prevent default
     if ('preventDefault' in e) {
       e.preventDefault();
@@ -43,6 +51,7 @@ export default function ChatInterface() {
     const userMessage: Message = {
       content: textToSubmit,
       role: 'user',
+      tone: selectedTone
     };
 
     setMessages((prev) => [...prev, userMessage]);
@@ -50,11 +59,12 @@ export default function ChatInterface() {
     setIsLoading(true);
 
     try {
-      const excuse = await generateExcuse(textToSubmit);
+      const excuse = await generateExcuse(textToSubmit, selectedTone);
       if (excuse) {
         const aiMessage: Message = {
           content: excuse,
           role: 'assistant',
+          tone: selectedTone
         };
         setMessages((prev) => [...prev, aiMessage]);
       }
@@ -69,11 +79,12 @@ export default function ChatInterface() {
     const userMessage: Message = {
       content: `Uploaded Image Text: ${extractedText}`,
       role: 'user',
+      tone: selectedTone
     };
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
     try {
-      const excuse = await generateExcuse(extractedText);
+      const excuse = await generateExcuse(extractedText, selectedTone);
       if (excuse) {
         const aiMessage: Message = {
           content: excuse,
@@ -104,6 +115,22 @@ export default function ChatInterface() {
                        hover:bg-gray-200 transition-colors"
           >
             {prompt}
+          </button>
+        ))}
+      </div>
+
+      {/* Tone Selection Section */}
+      <div className="py-4 flex flex-wrap gap-2 justify-center">
+        {TONE_OPTIONS.map((tone) => (
+          <button
+            key={tone}
+            onClick={() => setSelectedTone(tone)}
+            className={`px-3 py-1 text-sm rounded-full transition-colors 
+              ${selectedTone === tone 
+                ? 'bg-black text-white' 
+                : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+          >
+            {tone}
           </button>
         ))}
       </div>
