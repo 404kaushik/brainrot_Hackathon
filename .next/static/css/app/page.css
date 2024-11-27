@@ -1,0 +1,24 @@
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/components/Typewriter.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  
+  @keyframes blinkTextCursor {
+    from { border-right-color: rgba(255,255,255,0.75); }
+    to { border-right-color: transparent; }
+  }
+  
+  .typewriter h1 {
+    overflow: hidden;
+    border-right: .15em solid rgba(255,255,255,0.75);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: 
+      typewriter 4s steps(40, end),
+      blinkTextCursor 750ms step-end infinite;
+  }
+  

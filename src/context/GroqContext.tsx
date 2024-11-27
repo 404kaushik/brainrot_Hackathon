@@ -82,10 +82,9 @@ export function GroqProvider({ children }: { children: React.ReactNode }) {
   Rules for generating excuses:
   1. Use unexpected comedic twists
   2. Play with language and create humor
-  3. Add a Toronto slang to it
-  4. Make the excuse believable
-  5. Use witty wordplay and clever misdirection 
-  6. Make tiktok brainrot references
+  3. Make the excuse believable
+  4. Use witty wordplay and clever misdirection 
+  5. Make tiktok brainrot references
   
   Tone should be:
   - Sarcastic
@@ -100,7 +99,7 @@ export function GroqProvider({ children }: { children: React.ReactNode }) {
   - Using the workd 'brainrot'
   - Serious, dry language
   - Excuses that lack imagination
-  - Avoid using the work brainrot`,
+  - Avoid using the word 'brainrot' and 'tiktok'`,
   
   apologetic: `You are a deeply empathetic and remorseful communicator. Your goal is to craft excuses that are:
   - Genuinely contrite
@@ -163,7 +162,7 @@ export function GroqProvider({ children }: { children: React.ReactNode }) {
           },
           {
             role: "user",
-            content: `Generate a refined, believable, and atleast 3 different types of excuses for this situation, avoid using generic excuses: ${context}`
+            content: `Generate a refined and believable for this situation, avoid using generic excuses: ${context}`
           }
         ],
         model: "mixtral-8x7b-32768",
